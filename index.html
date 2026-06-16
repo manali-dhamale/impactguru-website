@@ -27,7 +27,7 @@
             <a href="#" class="link">Start a free fundraiser</a>
             <a href="#" class="link">How it works</a>
             <a href="#" class="link">Browse Fundraisers</a>
-            <button class="help-btn">Help Hitesh</button>
+            <button class="help-btn" id="help-trigger">Help Hitesh</button>
             
             <div class="nav-right-icons">
                 <a href="#"><i class="fa-solid fa-circle-user"></i></a>
@@ -140,6 +140,34 @@
         <button class="btn-footer">Start A Fundraiser</button>
     </div>
 
+
+    <div class="modal-overlay" id="help-modal">
+    <div class="modal-box">
+        <span class="modal-close" id="modal-close-btn">&times;</span>
+        
+        <div class="modal-banner-section">
+            <img src="./images/img1.png" alt="Patient Popup Image" class="modal-img">
+            <div class="modal-image-overlay">
+                <h2>Before he crawls, SMA 1 steals his strength!</h2>
+                <button class="modal-save-btn">SAVE HIM</button>
+            </div>
+        </div>
+        
+        <div class="modal-content">
+            <p class="modal-heading-text">Your donations will make a world of difference to</p>
+            <h3 class="modal-patient-name">Hitesh Naresh Bathija</h3>
+            
+            <button class="modal-donate-btn">Donate ₹ 9999</button>
+            
+            <p class="modal-or">OR</p>
+            <a href="#" class="modal-alt-amount">Choose a different amount</a>
+        </div>
+    </div>
+</div>
+
+    
+  
+
     <script>
         const mobileMenuBtn = document.getElementById('mobile-menu');
         const navMenu = document.getElementById('nav-menu');
@@ -155,6 +183,32 @@
                 menuIcon.classList.replace('fa-xmark', 'fa-bars');
             }
         });
+
+        // --- POPUP MODAL FUNCTIONALITY ---
+
+        // Grab the elements
+        const helpTriggerBtn = document.getElementById('help-trigger');
+        const helpModal = document.getElementById('help-modal');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+
+        // Function to open popup
+        helpTriggerBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevents default jump action if linked
+            helpModal.classList.add('show');
+        });
+
+        // Function to close popup when clicking the 'X'
+        modalCloseBtn.addEventListener('click', () => {
+            helpModal.classList.remove('show');
+        });
+
+        // Function to close popup if user clicks anywhere outside the white box
+        window.addEventListener('click', (event) => {
+            if (event.target === helpModal) {
+                helpModal.classList.remove('show');
+            }
+        });
+
     </script>
 </body>
 </html>
