@@ -314,11 +314,11 @@
                 border-top: 1px solid #d4ebd2;
             }
              
-            }
+            
             .donation-box {
                 position: static;
             }
-        
+        }
 
         @media screen and (max-width: 600px) {
             .meta-info-section {
