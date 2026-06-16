@@ -313,7 +313,11 @@
                 padding-top: 10px;
                 border-top: 1px solid #d4ebd2;
             }
-             
+             /* Forces the layout to collapse into 1 stacked column on mobile/tablet */
+            .main-grid {
+                grid-template-columns: 1fr; 
+                gap: 20px;
+            }
             
             .donation-box {
                 position: static;
