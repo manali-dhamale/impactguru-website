@@ -275,69 +275,86 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* --- MEDIA QUERIES (MOBILE RESPONSIVENESS) --- */
-        @media screen and (max-width: 992px) {
-            .menu-toggle {
-                display: block;
-            }
-            .nav-menu {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: #ecfcda;
-                padding: 20px;
-                gap: 15px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                align-items: stretch;
-                /* Hidden states */
-                max-height: 0;
-                opacity: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease-in-out, opacity 0.2s ease;
-            }
-            .nav-menu.active {
-                max-height: 500px;
-                opacity: 1;
-            }
-            .search-container input {
-                width: 100%;
-            }
-            .search-container input:focus {
-                width: 100%;
-            }
-            .nav-right-icons {
-                justify-content: center;
-                padding-top: 10px;
-                border-top: 1px solid #d4ebd2;
-            }
-             /* Forces the layout to collapse into 1 stacked column on mobile/tablet */
-            .main-grid {
-                grid-template-columns: 1fr; 
-                gap: 20px;
-            }
-            
-            .donation-box {
-                position: static;
-            }
-        }
-
-        @media screen and (max-width: 600px) {
-            .meta-info-section {
-                grid-template-columns: 1fr;
-            }
-            .campaign-title {
-                font-size: 22px;
-            }
-        }
-
-
-        /*--popup modal styles--*/
-        /* The dark semi-transparent background overlay */
+       /* --- MEDIA QUERIES (MOBILE RESPONSIVENESS) --- */
+@media screen and (max-width: 992px) {
+    .menu-toggle {
+        display: block;
+    }
+    
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #ecfcda;
+        padding: 20px;
+        padding-bottom: 40px; /* FIXED: Adds breathing space at the bottom for dropdown mechanics */
+        gap: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        align-items: stretch;
+        z-index: 9999;        /* FIXED: Keeps the entire nav drawer on top of page cards */
         
+        /* Hidden states */
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out, opacity 0.2s ease;
+    }
+    
+    .nav-menu.active {
+        max-height: 600px; /* FIXED: Increased slightly to comfortably room expanded contents */
+        opacity: 1;
+        overflow: visible; /* FIXED: Critical so dropdown menus aren't cut off inside the drawer */
+    }
+    
+    .search-container input {
+        width: 100%;
+    }
+    
+    .search-container input:focus {
+        width: 100%;
+    }
+    
+    .nav-right-icons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        padding-top: 15px;
+        border-top: 1px solid #d4ebd2;
+    }
+    
+    /* FIXED: Force currency menu to open UPWARDS on mobile layouts so it stays inside view */
+    .currency-dropdown .dropdown-menu {
+        bottom: 100%;
+        top: auto;
+        margin-bottom: 10px;
+        box-shadow: 0px -4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Forces the layout to collapse into 1 stacked column on mobile/tablet */
+    .main-grid {
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
+    
+    .donation-box {
+        position: static;
+    }
+}
 
+@media screen and (max-width: 600px) {
+    .meta-info-section {
+        grid-template-columns: 1fr;
+    }
+    .campaign-title {
+        font-size: 22px;
+    }
+}
+
+
+/*--popup modal styles--*/
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -345,7 +362,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 2000;
+    z-index: 10000; /* FIXED: Kept higher than mobile menu layer (9999) */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -490,4 +507,341 @@
 }
 .modal-alt-amount:hover {
     text-decoration: underline;
+}
+
+
+/* --- NAVBAR DROPDOWN SYSTEM --- */
+
+/* Parent wrapper alignment context */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 5px 0;
+    font-weight: 600;
+    color: #444;
+}
+
+.arrow-icon {
+    font-size: 11px;
+    transition: transform 0.2s ease;
+}
+
+/* Hidden container card directly beneath the element link */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #ffffff;
+    min-width: 130px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    padding: 6px 0;
+    z-index: 1500;
+    border: 1px solid #e2e8f0;
+}
+
+/* Fixed sizing layout configuration specific to the long currencies menu */
+.scrollable-menu {
+    min-width: 110px;
+    max-height: 240px;
+    overflow-y: auto; /* Adds a clean vertical scrollbar */
+}
+
+/* Single line context options row styling */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #333333;
+    font-weight: 500;
+    text-align: left;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f7fafc;
+    color: #1c938e;
+}
+
+.dropdown-item i {
+    font-size: 14px;
+    width: 16px;
+    text-align: center;
+    color: #718096;
+}
+
+/* --- TRIGGER ACTION: VISIBLE STATES ON HOVER --- */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Subtle accent transformation trick flipping the dropdown arrow upwards */
+.dropdown:hover .arrow-icon {
+    transform: rotate(180deg);
+}
+
+/* Quick custom styling fix for scrolling bars inside the currency card */
+.scrollable-menu::-webkit-scrollbar {
+    width: 6px;
+}
+.scrollable-menu::-webkit-scrollbar-thumb {
+    background-color: #cbd5e0;
+    border-radius: 3px;
+}
+
+
+/* ==========================================================================
+   CAMPAIGN CREATION FORM STYLES
+   ========================================================================== */
+
+.campaign-form-body {
+    background-color: #f4f7f6;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.form-header {
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.form-header-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1c938e;
+    text-decoration: none;
+}
+
+.exit-btn {
+    text-decoration: none;
+    color: #666;
+    font-weight: 600;
+    font-size: 15px;
+    transition: color 0.2s;
+}
+.exit-btn:hover {
+    color: #ef4444;
+}
+
+.form-page-wrapper {
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.form-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 650px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    padding: 35px;
+    box-sizing: border-box;
+}
+
+.form-card-header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eef2f5;
+    padding-bottom: 20px;
+}
+
+.form-card-header h2 {
+    color: #222;
+    font-size: 26px;
+    margin-bottom: 8px;
+}
+
+.form-card-header p {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.form-section {
+    margin-bottom: 30px;
+}
+
+.form-section h3 {
+    font-size: 17px;
+    color: #1c938e;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px dashed #e2e8f0;
+    padding-bottom: 6px;
+}
+
+.input-field-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.input-field-group input[type="text"],
+.input-field-group input[type="number"],
+.input-field-group select {
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #fff;
+}
+
+.input-field-group input:focus,
+.input-field-group select:focus {
+    border-color: #1c938e;
+}
+
+/* Custom layout setup for currency prefix symbol inside target box */
+.currency-input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.currency-input-wrapper:focus-within {
+    border-color: #1c938e;
+}
+.currency-prefix {
+    background: #f1f5f9;
+    padding: 12px 16px;
+    font-weight: bold;
+    color: #475569;
+    border-right: 1px solid #cbd5e1;
+}
+.currency-input-wrapper input {
+    border: none !important;
+    flex: 1;
+}
+
+/* Drag and drop image visual area styling rules */
+.upload-dropzone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    background: #f8fafc;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s, border-color 0.2s;
+}
+.upload-dropzone:hover {
+    background: #f1f5f9;
+    border-color: #1c938e;
+}
+.upload-icon {
+    font-size: 36px;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+.upload-main-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 4px;
+}
+.upload-sub-text {
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Hidden dynamic preview box element layer container rules */
+.image-preview-holder {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 8px;
+    box-sizing: border-box;
+}
+#upload-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+}
+.remove-img-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 24px;
+}
+
+/* Validation error labels placeholder engine styles */
+.validation-error-text {
+    color: #ef4444;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 5px;
+    display: none;
+}
+
+.launch-campaign-btn {
+    width: 100%;
+    background: #1cb390;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(28, 179, 144, 0.2);
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+.launch-campaign-btn:hover {
+    background: #179d7e;
+}
+
+@media (max-width: 768px) {
+    .form-card {
+        padding: 20px;
+    }
 }

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start a Fundraiser - ImpactGuru</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="campaign-form-body">
+
+    <header class="form-header">
+        <div class="form-header-container">
+            <a href="index.html" class="form-logo">
+                <i class="fa-solid fa-plus-medical logo-cross"></i> ImpactGuru<span class="logo-com">.com</span>
+            </a>
+            <a href="index.html" class="exit-btn"><i class="fa-solid fa-xmark"></i> Exit</a>
+        </div>
+    </header>
+
+    <main class="form-page-wrapper">
+        <div class="form-card">
+            
+            <div class="form-card-header">
+                <h2>Start Your Fundraiser</h2>
+                <p>Fill in the details below to launch your crowdfunding campaign in under 2 minutes.</p>
+            </div>
+
+            <form id="campaign-creation-form" novalidate>
+                
+                <div class="form-section">
+                    <h3><i class="fa-solid fa-user-doctor"></i> Patient & Cause Details</h3>
+                    
+                    <div class="input-field-group">
+                        <label for="patient-name">Patient / Beneficiary Full Name</label>
+                        <input type="text" id="patient-name" placeholder="e.g. Hitesh Naresh Bathija" required>
+                        <span class="validation-error-text" id="patient-name-error">Please enter the patient's full name.</span>
+                    </div>
+
+                    <div class="input-field-group">
+                        <label for="medical-cause">Medical Cause / Illness Description</label>
+                        <select id="medical-cause" required>
+                            <option value="" disabled selected>Select a medical condition</option>
+                            <option value="brain-hemorrhage">Brain Hemorrhage / Neurology</option>
+                            <option value="sma">Spinal Muscular Atrophy (SMA 1)</option>
+                            <option value="cancer">Cancer / Oncology Treatment</option>
+                            <option value="accident">Accident / Emergency Trauma</option>
+                            <option value="other">Other Medical Condition</option>
+                        </select>
+                        <span class="validation-error-text" id="medical-cause-error">Please select a valid medical cause.</span>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fa-solid fa-hand-holding-dollar"></i> Fundraising Target</h3>
+
+                    <div class="input-field-group">
+                        <label for="campaign-title">Campaign Title / Headline</label>
+                        <input type="text" id="campaign-title" placeholder="e.g. A brain hemorrhage stole my brother's future overnight" required>
+                        <span class="validation-error-text" id="campaign-title-error">Please create a compelling campaign headline (minimum 15 characters).</span>
+                    </div>
+
+                    <div class="input-field-group">
+                        <label for="target-amount">Target Goal Amount (₹ INR)</label>
+                        <div class="currency-input-wrapper">
+                            <span class="currency-prefix">₹</span>
+                            <input type="number" id="target-amount" placeholder="Enter target amount" min="1000" required>
+                        </div>
+                        <span class="validation-error-text" id="target-amount-error">Please enter a valid target goal amount (minimum ₹1,000).</span>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fa-solid fa-image"></i> Campaign Banner Image</h3>
+                    <div class="input-field-group">
+                        <label>Upload Patient/Hospital Photo</label>
+                        <div class="upload-dropzone" id="image-dropzone">
+                            <input type="file" id="campaign-image" accept="image/*" hidden required>
+                            <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                            <p class="upload-main-text">Click or Drag & Drop to Upload Image</p>
+                            <p class="upload-sub-text">Supports JPG, PNG (Max 5MB)</p>
+                            <div class="image-preview-holder" id="preview-container">
+                                <img src="" alt="Preview" id="upload-preview">
+                                <button type="button" class="remove-img-btn" id="remove-preview-btn">&times;</button>
+                            </div>
+                        </div>
+                        <span class="validation-error-text" id="campaign-image-error">Please upload a valid campaign cover photo.</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="launch-campaign-btn">LAUNCH FUNDRAISER</button>
+
+            </form>
+        </div>
+    </main>
+
+    <script src="campaign-validation.js"></script>
+</body>
+</html>

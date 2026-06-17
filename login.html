@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up or Login</title>
+    <link rel="icon" type="image/x-icon" href="./images/icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <main class="auth_page_container">
+        <div class="auth_split_grid">
+
+            <section class="auth-banner-side">
+                <div class="brand-logo-row">
+                    <span class="brand-logo-text"><i class="fa-solid fa-plus-medical logo-cross"></i> ImpactGuru <span class="logo-com">.com</span> </span>
+                </div>
+
+                <h1 class="banner-title">CAMPAIGNER APP</h1>
+                <p class="banner-subtitle">Your Ultimate Fundraising Companion!</p>
+
+                <ul class="banner-features-list">
+                    <li><i class="fa-solid fa-earth-americas"></i> Have a fundraising query?</li>
+                    <li><i class="fa-solid fa-lightbulb"></i> Need tips to raise funds faster?</li>
+                    <li><i class="fa-solid fa-screwdriver-wrench"></i> Looking for support to withdraw funds?</li>
+                </ul>
+            <div class="banner-app-download">
+                    <p class="download-text">Get help with all these and more via our Campaigner App.</p>
+                    <div class="download-badge-row">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play store button" class="app-badge-img">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App store button" class="app-badge-img">
+                    </div>
+                </div>
+            </section>
+            
+            <section class="auth-form-side">
+                <div class="form-wrapper-box">
+                    <h2 class="form-title">Sign up or Login</h2>
+                    
+                    <form id="otp-auth-form">
+                        <div class="input-phone-group">
+                            <div class="country-code-select">
+                                <span id="selected-code">+91</span>
+                                <i class="fa-solid fa-chevron-down select-arrow"></i>
+                                <div class="country-dropdown-options" id="code-dropdown">
+                                    <div class="code-opt" data-code="+91">+91 (IN)</div>
+                                    <div class="code-opt" data-code="+1">+1 (US/CA)</div>
+                                    <div class="code-opt" data-code="+44">+44 (UK)</div>
+                                    <div class="code-opt" data-code="+65">+65 (SG)</div>
+                                </div>
+                            </div>
+                            
+                            <input type="tel" id="user-phone" placeholder="Enter Your Mobile Number" maxlength="10" autocomplete="off" required>
+                        </div>
+                        
+                        <p class="error-validation-msg" id="phone-error">Please enter a valid 10-digit mobile number.</p>
+                        
+                        <button type="submit" class="submit-otp-btn" id="get-otp-btn">GET OTP</button>
+                    </form>
+                    
+                    <div class="otp-verification-screen" id="otp-verify-screen">
+                        <h3 class="verify-title">Verify OTP</h3>
+                        <p class="verify-subtitle">Enter the 4-digit verification code sent to your mobile phone number.</p>
+                        
+                        <div class="otp-fields-row">
+                            <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]*">
+                            <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]*">
+                            <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]*">
+                            <input type="text" class="otp-digit" maxlength="1" pattern="[0-9]*">
+                        </div>
+                        
+                        <button class="verify-confirm-btn" id="confirm-login-btn">VERIFY & PROCEED</button>
+                        <p class="resend-link-text">Didn't receive code? <a href="#" id="resend-trigger">Resend OTP</a></p>
+                    </div>
+
+                </div>
+            </section>
+            
+        </div>
+    </main>
+
+    <script src="auth.js"></script>
+</body>
+</html>

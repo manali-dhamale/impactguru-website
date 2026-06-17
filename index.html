@@ -29,10 +29,34 @@
             <a href="#" class="link">Browse Fundraisers</a>
             <button class="help-btn" id="help-trigger">Help Hitesh</button>
             
-            <div class="nav-right-icons">
-                <a href="#"><i class="fa-solid fa-circle-user"></i></a>
-                <a href="#"><i class="fa-solid fa-indian-rupee-sign"></i> INR <i class="fa-solid fa-angle-down"></i></a>
-            </div>
+    <div class="nav-right-icons">
+    <div class="dropdown profile-dropdown">
+        <a href="#" class="dropdown-trigger">
+            <i class="fa-solid fa-circle-user"></i> <i class="fa-solid fa-angle-down arrow-icon"></i>
+        </a>
+        <div class="dropdown-menu">
+            <a href="login.html" class="dropdown-item"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+            <a href="#" class="dropdown-item"><i class="fa-solid fa-user-plus"></i> Sign up</a>
+        </div>
+    </div>
+    
+    <div class="dropdown currency-dropdown">
+        <a href="#" class="dropdown-trigger">
+            <i class="fa-solid fa-indian-rupee-sign"></i> <span id="current-currency">INR</span> <i class="fa-solid fa-angle-down arrow-icon"></i>
+        </a>
+        <div class="dropdown-menu scrollable-menu">
+            <a href="#" class="dropdown-item" data-currency="INR"><i class="fa-solid fa-indian-rupee-sign"></i> INR</a>
+            <a href="#" class="dropdown-item" data-currency="USD"><i class="fa-solid fa-dollar-sign"></i> USD</a>
+            <a href="#" class="dropdown-item" data-currency="GBP"><i class="fa-solid fa-sterling-sign"></i> GBP</a>
+            <a href="#" class="dropdown-item" data-currency="SGD"><i class="fa-solid fa-dollar-sign"></i> SGD</a>
+            <a href="#" class="dropdown-item" data-currency="HKD"><i class="fa-solid fa-dollar-sign"></i> HKD</a>
+            <a href="#" class="dropdown-item" data-currency="AED">AED</a>
+            <a href="#" class="dropdown-item" data-currency="AUD"><i class="fa-solid fa-dollar-sign"></i> AUD</a>
+            <a href="#" class="dropdown-item" data-currency="CAD"><i class="fa-solid fa-dollar-sign"></i> CAD</a>
+            <a href="#" class="dropdown-item" data-currency="EUR"><i class="fa-solid fa-euro-sign"></i> EURO</a>
+        </div>
+    </div>
+</div>
         </div>
     </nav>
     
@@ -137,7 +161,7 @@
     </div>
 
     <div class="bottom-banner">
-        <button class="btn-footer">Start A Fundraiser</button>
+        <a href="create-campaign.html" class="btn-footer">Start A Fundraiser</a>
     </div>
 
 
@@ -208,6 +232,37 @@
                 helpModal.classList.remove('show');
             }
         });
+
+
+        // --- NAVBAR DROPDOWN FUNCTIONALITY ---
+
+        const currencyItems = document.querySelectorAll('.currency-dropdown .dropdown-item');
+        const currentCurrencyText = document.getElementById('current-currency');
+        const currencyTriggerIcon = document.querySelector('.currency-dropdown .dropdown-trigger i');
+
+        currencyItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const selectedCurrency = item.getAttribute('data-currency');
+                
+                // Update selection text indicator container context 
+                currentCurrencyText.textContent = selectedCurrency;
+                
+                // Match icon design indicator elements dynamically with FontAwesome targets
+                if(selectedCurrency === 'INR') {
+                    currencyTriggerIcon.className = "fa-solid fa-indian-rupee-sign";
+                } else if(selectedCurrency === 'EUR') {
+                    currencyTriggerIcon.className = "fa-solid fa-euro-sign";
+                } else if(selectedCurrency === 'GBP') {
+                    currencyTriggerIcon.className = "fa-solid fa-sterling-sign";
+                } else {
+                    // Default generic fallback option placeholder icon for matching entries like USD/CAD/AUD/SGD
+                    currencyTriggerIcon.className = "fa-solid fa-dollar-sign";
+                }
+            });
+        });
+
 
     </script>
 </body>
