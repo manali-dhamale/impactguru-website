@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Donation | ImpactGuru</title>
+    <link rel="stylesheet" href="style.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+
+        .page-close{
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #999;
+            line-height:1;
+            cursor: pointer;
+        }
+       
+        .donation-page-container {
+            max-width: 450px;
+            margin: 60px auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            font-family: Arial, sans-serif;
+        }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 14px; color: #333; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 15px; }
+        .pay-submit-btn { width: 100%; background-color: #0da2e3; color: white; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase; }
+        .pay-submit-btn:hover { background-color: #0c8fc9; }
+    </style>
+</head>
+<body>
+
+    <div class="donation-page-container">
+        <a href="index.php" id="back-to-campaign-btn" class="page-close" >&times;</a> 
+        <center>
+            <img src="./images/impactguruLogo.png" alt="ImpactGuru" style="max-height: 40px; margin-bottom: 15px;">
+            <h2>Support Recovery Journey</h2>
+            <p style="color: #666; font-size: 14px; margin-bottom: 25px;">Your contribution helps pay for vital medical care treatment.</p>
+        </center>
+
+        <form id="checkout-form">
+            <div class="form-group">
+                <label for="donor-amount">Donation Amount (INR)</label>
+                <input type="number" id="donor-amount" placeholder="Enter Amount (e.g., 2000)" min="10" required>
+            </div>
+
+            <div class="form-group">
+                <label for="donor-name">Full Name</label>
+                <input type="text" id="donor-name" placeholder="Your Full Name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="donor-email">Email Address</label>
+                <input type="email" id="donor-email" placeholder="name@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="donor-phone">Phone Number</label>
+                <input type="tel" id="donor-phone" placeholder="9876543210" required>
+            </div>
+
+            <button type="button" id="pay-now-btn" class="pay-submit-btn">Proceed to Payment</button>
+        </form>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+         
+            const urlParams = new URLSearchParams(window.location.search);
+            const campaignId = urlParams.get('campaign_id') || '1'; 
+
+           
+            const backBtn = document.getElementById("back-to-campaign-btn");
+            if (backBtn) {
+                backBtn.href = `index.php?id=${campaignId}`;
+            }
+
+            const payNowBtn = document.getElementById("pay-now-btn");
+
+            if(payNowBtn) {
+                payNowBtn.addEventListener('click', function () {
+                    
+                    const customAmount = document.getElementById("donor-amount").value;
+                    const donorName = document.getElementById("donor-name").value;
+                    const donorEmail = document.getElementById("donor-email").value;
+                    const donorPhone = document.getElementById("donor-phone").value;
+
+                   
+                
+                    if (!customAmount || !donorName || !donorEmail || !donorPhone) {
+                        alert("Please complete all fields before opening the payment system.");
+                        return;
+                    }
+
+                    const amountInPaise = parseFloat(customAmount) * 100;
+
+                    try {
+                        const options = {
+                            key: "rzp_test_T1rz0y7p7Cggag", 
+                            amount: amountInPaise, 
+                            currency: "INR",
+                            name: "ImpactGuru Donor Support",
+                            description: "Medical Treatment Donation",
+                            prefill: {
+                                name: donorName,
+                                email: donorEmail,
+                                contact: donorPhone
+                            },
+                            handler: function (response) {
+                               
+                                fetch("save_donation.php", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        payment_id: response.razorpay_payment_id,
+                                        amount: customAmount,
+                                        campaign_id: campaignId,
+                                        donor_name: donorName,
+                                        donor_email: donorEmail,
+                                        donor_phone: donorPhone
+                                    })
+                                })
+                                .then(res => res.text())
+                                .then(data => {
+                                    console.log("Logged tracking entry:", data);
+                                    
+                                    
+                                    window.location.href = `success.php?amount=${customAmount}&payment_id=${response.razorpay_payment_id}&name=${encodeURIComponent(donorName)}&campaign_id=${campaignId}`;
+                                });
+                            },
+                            modal: {
+                                ondismiss: function () {
+                                    console.log("Razorpay framework closed by donor interface anchor context.");
+                                   
+                                    alert("Payment cancelled. Returning to the campaign page.");
+                                    window.location.href = `index.php?id=${campaignId}`;
+                                }
+                            }
+                        };
+                        
+                        const rzp = new Razorpay(options);
+                        rzp.open();
+                    } catch (error) {
+                        console.error("Razorpay payment window loop crash:", error);
+                    }
+                });
+            }
+    </script>
+</body>
+</html>

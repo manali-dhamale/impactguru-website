@@ -50,8 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetAmount = document.getElementById('target-amount');
 
         // Reset past errors state visibility
-        document.querySelectorAll('.validation-error-text').style.display = 'none';
-
+        document.querySelectorAll('.validation-error-text').forEach(errorSpan => {
+    errorSpan.style.display = 'none';
+});
         // Validate Patient Name
         if (patientName.value.trim() === "") {
             showError('patient-name');
@@ -84,10 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Forward processing validation status evaluation block
         if (isFormValid) {
-            alert('Success! Form validation complete. Ready for Step 7 (REST API integration).');
-            form.reset();
-            previewContainer.style.display = 'none';
-            window.location.href = 'index.html'; // Points back to home dashboard index web layout view page
+           form.submit();
         }
     });
 

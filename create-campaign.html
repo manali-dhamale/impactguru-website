@@ -11,10 +11,10 @@
 
     <header class="form-header">
         <div class="form-header-container">
-            <a href="index.html" class="form-logo">
+            <a href="index.php" class="form-logo">
                 <i class="fa-solid fa-plus-medical logo-cross"></i> ImpactGuru<span class="logo-com">.com</span>
             </a>
-            <a href="index.html" class="exit-btn"><i class="fa-solid fa-xmark"></i> Exit</a>
+            <a href="index.php" class="exit-btn"><i class="fa-solid fa-xmark"></i> Exit</a>
         </div>
     </header>
 
@@ -26,20 +26,20 @@
                 <p>Fill in the details below to launch your crowdfunding campaign in under 2 minutes.</p>
             </div>
 
-            <form id="campaign-creation-form" novalidate>
+            <form action="create_campaign.php" method="POST" enctype="multipart/form-data" id="campaign-creation-form" novalidate >
                 
                 <div class="form-section">
                     <h3><i class="fa-solid fa-user-doctor"></i> Patient & Cause Details</h3>
                     
                     <div class="input-field-group">
                         <label for="patient-name">Patient / Beneficiary Full Name</label>
-                        <input type="text" id="patient-name" placeholder="e.g. Hitesh Naresh Bathija" required>
+                        <input type="text" id="patient-name" name="patient_name" placeholder="e.g. Hitesh Naresh Bathija" required>
                         <span class="validation-error-text" id="patient-name-error">Please enter the patient's full name.</span>
                     </div>
 
                     <div class="input-field-group">
                         <label for="medical-cause">Medical Cause / Illness Description</label>
-                        <select id="medical-cause" required>
+                        <select id="medical-cause" name="medical_cause" required>
                             <option value="" disabled selected>Select a medical condition</option>
                             <option value="brain-hemorrhage">Brain Hemorrhage / Neurology</option>
                             <option value="sma">Spinal Muscular Atrophy (SMA 1)</option>
@@ -56,7 +56,7 @@
 
                     <div class="input-field-group">
                         <label for="campaign-title">Campaign Title / Headline</label>
-                        <input type="text" id="campaign-title" placeholder="e.g. A brain hemorrhage stole my brother's future overnight" required>
+                        <input type="text" id="campaign-title" name="title" placeholder="e.g. A brain hemorrhage stole my brother's future overnight" required>
                         <span class="validation-error-text" id="campaign-title-error">Please create a compelling campaign headline (minimum 15 characters).</span>
                     </div>
 
@@ -64,7 +64,7 @@
                         <label for="target-amount">Target Goal Amount (₹ INR)</label>
                         <div class="currency-input-wrapper">
                             <span class="currency-prefix">₹</span>
-                            <input type="number" id="target-amount" placeholder="Enter target amount" min="1000" required>
+                            <input type="number" id="target-amount" name="target_amount" placeholder="Enter target amount" min="1000" required>
                         </div>
                         <span class="validation-error-text" id="target-amount-error">Please enter a valid target goal amount (minimum ₹1,000).</span>
                     </div>
@@ -75,7 +75,7 @@
                     <div class="input-field-group">
                         <label>Upload Patient/Hospital Photo</label>
                         <div class="upload-dropzone" id="image-dropzone">
-                            <input type="file" id="campaign-image" accept="image/*" hidden required>
+                            <input type="file" id="campaign-image" name="banner_image" accept="image/*" hidden required>
                             <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
                             <p class="upload-main-text">Click or Drag & Drop to Upload Image</p>
                             <p class="upload-sub-text">Supports JPG, PNG (Max 5MB)</p>
@@ -88,12 +88,37 @@
                     </div>
                 </div>
 
+                <div class="input-field-group">
+                    <label for="campaigner-name">Campaigner Full Name</label>
+                    <input type="text" id="campaigner-name" name="campaigner_name" placeholder="e.g. Karishma Naresh Bathija" required>
+                </div>
+
+                <div class="input-field-group">
+                    <label for="campaigner-location">Campaigner Location</label>
+                    <input type="text" id="campaigner-location" name="campaigner_location" placeholder="e.g. Kalyan, Maharashtra" required>
+                </div>
+
+                <div class="input-field-group">
+                    <label for="relationship">Relationship to Patient</label>
+                    <input type="text" id="relationship" name="relationship" placeholder="e.g. Sibling, Parent, Friend" required>
+                </div>
+
+                <div class="input-field-group">
+                    <label for="hospital-name">Hospital Name & City</label>
+                    <input type="text" id="hospital-name" name="hospital_name" placeholder="e.g. Aayush Hospital, Kalyan" required>
+                </div>
+
+                <div class="input-field-group">
+                    <label for="campaign-story">Full Campaign Description / Story</label>
+                    <textarea id="campaign-story" name="campaign_story" rows="6" placeholder="Describe the medical emergency and why funds are needed..." required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+                </div>
+
                 <button type="submit" class="launch-campaign-btn">LAUNCH FUNDRAISER</button>
 
             </form>
         </div>
     </main>
 
-    <script src="campaign-validation.js"></script>
+ <script src="campaign-validation.js"></script> 
 </body>
 </html>

@@ -1,1 +1,5 @@
 manali|m@gmail.com|123
+test|test@gmail.com|123
+test2|test2@gmail.com|$2y$12$Pb4v0BYxswDS2RidFtn7n.JeQKJf2EgXCTSYnPtrcSjra23i7yJey
+2|2@gmail.com|$2y$12$fH/R8UALc.CcbBchN1MpaeTSHbFVh1sYP4ONM/TTEFblAOsfJq/c2
+test3|test3@gmail.com|$2y$12$Z2mSkxU1TPGvr3kMpGUxIuugd75tI0Cb34Ik4C1SVm33Mk/2wDgh.

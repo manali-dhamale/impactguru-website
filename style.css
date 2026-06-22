@@ -178,6 +178,9 @@
         
         /* --- ACTION BUTTONS --- */
         .btn-donate {
+            display: block;
+            text-align: center;
+            box-sizing: border-box;
             background-color: #ff8502;
             color: white;
             border: none;
