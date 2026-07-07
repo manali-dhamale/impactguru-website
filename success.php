@@ -1,10 +1,33 @@
 <?php
-// Capture parameters sent via Razorpay's redirect string
+
+date_default_timezone_set('Asia/Kolkata');
+
 $amount = isset($_GET['amount']) ? htmlspecialchars($_GET['amount']) : '0';
 $payment_id = isset($_GET['payment_id']) ? htmlspecialchars($_GET['payment_id']) : 'N/A';
 $donor_name = isset($_GET['name']) ? htmlspecialchars($_GET['name']) : 'Generous Donor';
 $campaign_id = isset($_GET['campaign_id']) ? intval($_GET['campaign_id']) : 1;
+
+$host = 'localhost'; $dbName = 'impactguru_db'; $dbUser = 'root'; $dbPass = 'manu@1234';
+$donationTime = date('d M Y, h:i A');
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbName;charset=utf8", $dbUser, $dbPass);
+    
+    
+    $stmt = $pdo->prepare("SELECT created_at, status FROM payments WHERE payment_id = :payment_id LIMIT 1");
+    $stmt->execute([':payment_id' => $payment_id]);
+    $paymentRow = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($paymentRow) {
+       
+        $donationTime = date('d M Y, h:i A', strtotime($paymentRow['created_at']));
+    }
+} catch (PDOException $e) {
+    
+}
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,13 +93,21 @@ $campaign_id = isset($_GET['campaign_id']) ? intval($_GET['campaign_id']) : 1;
         
         <div class="amount-display">₹ <?php echo number_format($amount); ?></div>
         
-        <div class="details-box">
+       <div class="details-box">
             <strong>Payment ID:</strong> <?php echo $payment_id; ?><br>
-            <strong>Status:</strong> Completed Successfully<br>
-            <strong>Purpose:</strong> Medical Fund Contribution
+            <strong>Status:</strong> 
+    <?php 
+        if (isset($paymentRow['status']) && $paymentRow['status'] == 1) {
+            echo "<span style='color: #27ae60; font-weight:bold;'>Completed Successfully</span>";
+        } elseif (isset($paymentRow['status']) && $paymentRow['status'] == 0) {
+            echo "<span style='color: #c0392b; font-weight:bold;'>Transaction Failed</span>";
+        } else {
+            echo "<span style='color: #7f8c8d; font-weight:bold;'>Soft Deleted/Refunded</span>";
+        }
+    ?><br>
+            <strong>Donation Date:</strong> <?php echo $donationTime; ?><br> <strong>Purpose:</strong> Medical Fund Contribution
         </div>
-
-        <!-- 🌟 DYNAMIC LINK: Routes them back to the exact fundraiser page using the dynamic id query -->
+        
         <a href="index.php?id=<?php echo $campaign_id; ?>" class="return-btn">Return to Fundraiser Profile</a>
     </div>
 

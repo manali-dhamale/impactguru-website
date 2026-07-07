@@ -6,6 +6,7 @@
     <title>Start a Fundraiser - ImpactGuru</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="./images/icon.png">
 </head>
 <body class="campaign-form-body">
 
@@ -98,15 +99,51 @@
                     <input type="text" id="campaigner-location" name="campaigner_location" placeholder="e.g. Kalyan, Maharashtra" required>
                 </div>
 
-                <div class="input-field-group">
-                    <label for="relationship">Relationship to Patient</label>
-                    <input type="text" id="relationship" name="relationship" placeholder="e.g. Sibling, Parent, Friend" required>
+                <div class="form-group">
+                    <label for="relationship">Your Relationship to the Patient</label>
+                    <select id="relationship" name="relationship" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                        <option value="">-- Select Relationship --</option>
+                        <option value="1">Father</option>
+                        <option value="2">Mother</option>
+                        <option value="3">Sibling (Brother/Sister)</option>
+                        <option value="4">Spouse (Husband/Wife)</option>
+                        <option value="5">Child (Son/Daughter)</option>
+                        <option value="6">Friend / Relative / Other</option>
+                    </select>
                 </div>
 
                 <div class="input-field-group">
                     <label for="hospital-name">Hospital Name & City</label>
                     <input type="text" id="hospital-name" name="hospital_name" placeholder="e.g. Aayush Hospital, Kalyan" required>
                 </div>
+
+
+                <div class="form-group">
+                    <label for="campaign-state">State</label>
+                    <select id="campaign-state" name="state" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Karnataka">Karnataka</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="campaign-city">City</label>
+                    <select id="campaign-city" name="city" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                        <option value="">Select City</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Thane">Thane</option>
+                        <option value="Kalyan">Kalyan</option>
+                        <option value="Navi Mumbai">Navi Mumbai</option>
+                        <option value="Pune">Pune</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="campaign-region">Region / Area (Local Neighborhood)</label>
+                    <input type="text" id="campaign-region" name="region_area" placeholder="e.g., Andheri West, Naupada, Khadakpada" required>
+                </div>
+
 
                 <div class="input-field-group">
                     <label for="campaign-story">Full Campaign Description / Story</label>

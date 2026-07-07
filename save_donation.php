@@ -24,8 +24,8 @@ if ($data) {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-        $sql = "INSERT INTO payments (payment_id, amount, campaign_id, donor_name, donor_email, donor_phone) 
-                VALUES (:payment_id, :amount, :campaign_id, :donor_name, :donor_email, :donor_phone)";
+        $sql = "INSERT INTO payments (payment_id, amount, campaign_id, donor_name, donor_email, donor_phone, status) 
+                VALUES (:payment_id, :amount, :campaign_id, :donor_name, :donor_email, :donor_phone , :status)";
         
         $stmt = $pdo->prepare($sql);
 
@@ -36,7 +36,8 @@ if ($data) {
             ':campaign_id' => $campaignId,
             ':donor_name'  => $donorName,
             ':donor_email' => $donorEmail,
-            ':donor_phone' => $donorPhone
+            ':donor_phone' => $donorPhone,
+            ':status'      => 1
         ]);
 
       

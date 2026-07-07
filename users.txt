@@ -1,4 +1,4 @@
-manali|m@gmail.com|123
+manali|m@gmail.com|$2y$10$8v/5P.E0pE8.fS82Z7q.g.TfQ7VvR9B2D8K2hM9YdZ3eH7rZ8h1uC
 test|test@gmail.com|123
 test2|test2@gmail.com|$2y$12$Pb4v0BYxswDS2RidFtn7n.JeQKJf2EgXCTSYnPtrcSjra23i7yJey
 2|2@gmail.com|$2y$12$fH/R8UALc.CcbBchN1MpaeTSHbFVh1sYP4ONM/TTEFblAOsfJq/c2
